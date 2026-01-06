@@ -507,7 +507,7 @@ const App = () => {
       {/* Navigation */}
       <nav>
         <div className="container nav-content">
-          <div className="logo">DAVID TURNER / PERF LABS</div>
+          <div className="logo">DTPERFORMACELABS</div>
           <div>
             <button className="btn btn-black" onClick={() => handleBooking('General')}>
               Inquire
