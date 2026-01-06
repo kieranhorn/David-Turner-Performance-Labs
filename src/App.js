@@ -4,7 +4,6 @@ import {
   MessageSquare, 
   Phone, 
   Instagram, 
-  Twitter, 
   Award, 
   Target, 
   Zap, 
@@ -12,12 +11,68 @@ import {
   ArrowRight,
   TrendingUp,
   Shield,
-  MapPin
+  MapPin,
+  ArrowLeft
 } from 'lucide-react';
+
+const LegalDocs = ({ view, onBack }) => {
+  return (
+    <div className="container" style={{ paddingTop: 'clamp(100px, 15vh, 140px)', paddingBottom: '100px', minHeight: '100vh' }}>
+      <button onClick={onBack} className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', marginBottom: '3rem' }}>
+        <ArrowLeft size={16} /> Back to Lab
+      </button>
+
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <h1 className="display-font" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem' }}>
+          {view === 'privacy' ? 'Privacy Policy' : 'Terms & Liability'}
+        </h1>
+
+        {view === 'privacy' ? (
+          <div style={{ lineHeight: '1.8', color: '#444' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>1. Data Collection</h3>
+            <p>We collect information you provide directly to us via our intake forms, including your name, email address, professional background, and physical performance objectives. We operate in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+            
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>2. Use of Information</h3>
+            <p>Your data is used strictly for:</p>
+            <ul style={{ listStyle: 'disc', paddingLeft: '20px', margin: '1rem 0' }}>
+              <li>Assessing your suitability for our performance programs.</li>
+              <li>Scheduling and communication regarding your sessions.</li>
+              <li>Legal and safety compliance.</li>
+            </ul>
+            <p>We do not sell your personal data to third parties.</p>
+
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>3. Data Security</h3>
+            <p>We implement security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.</p>
+          </div>
+        ) : (
+          <div style={{ lineHeight: '1.8', color: '#444' }}>
+             <div style={{ padding: '2rem', background: '#f0f0f0', borderRadius: '20px', marginBottom: '3rem' }}>
+               <h4 style={{ fontWeight: '900', marginBottom: '1rem' }}>CRITICAL LIABILITY NOTICE</h4>
+               <p style={{ fontSize: '0.9rem' }}>By participating in any services provided by David Turner Performance Labs, you expressly waive your right to sue for any injury or physical distress occurred during training or restoration.</p>
+             </div>
+
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>1. Assumption of Risk</h3>
+            <p>You acknowledge that participation in high-intensity strength training, metabolic conditioning, and manual therapy ("Services") involves inherent risks, including but not limited to: muscle strains, rhabdomyolysis, cardiovascular stress, and joint injury. You voluntarily assume all such risks.</p>
+            
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>2. Medical Disclaimer</h3>
+            <p>David Turner Performance Labs is not a medical facility. Our staff are not physicians. No advice or training program provided should be considered medical advice. You certify that you have consulted with a physician and have full clearance to engage in strenuous physical activity.</p>
+
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>3. Release of Liability</h3>
+            <p>To the fullest extent permitted by law, you release, indemnify, and hold harmless David Turner Performance Labs, its owners, and employees from any claims, demands, or causes of action arising out of your participation in our programs, including those arising from negligence.</p>
+            
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginTop: '2.5rem', marginBottom: '1rem' }}>4. Cancellation Policy</h3>
+            <p>Cancellations made less than 24 hours before a scheduled session will be charged at the full session rate. This policy is in addition to your statutory rights under the Consumer Rights Act 2015.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const App = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [activeService, setActiveService] = useState(null);
+  const [view, setView] = useState('home');
   const [showCookieBanner, setShowCookieBanner] = useState(() => {
     return !localStorage.getItem('cookieConsent');
   });
@@ -28,23 +83,41 @@ const App = () => {
     setShowCookieBanner(false);
   };
 
+  if (view !== 'home') {
+    return (
+      <div>
+        <style>{`
+          :root { --primary: #000000; --secondary: #ffffff; --gray-light: #f8f8f8; --gray-medium: #d1d1d1; --transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1); }
+          * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+          .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1.25rem 2.75rem; border-radius: 99px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: var(--transition); border: none; gap: 0.75rem; }
+          .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+          .btn-outline:hover { background: var(--primary); color: var(--secondary); }
+          .display-font { font-weight: 900; text-transform: uppercase; letter-spacing: -0.04em; line-height: 0.85; }
+          .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+          @media (max-width: 768px) { .container { padding: 0 20px; } }
+        `}</style>
+        <LegalDocs view={view} onBack={() => setView('home')} />
+      </div>
+    );
+  }
+
   const services = [
     {
       id: 'training',
       title: 'Elite Personal Training',
-      price: '$200/Session',
+      price: 'Contact for Details',
       description: 'Scientific strength and conditioning protocols tailored to your specific physiological profile and lifestyle goals.'
     },
     {
       id: 'nutrition',
       title: 'Metabolic Engineering',
-      price: '$500/Month',
+      price: 'Contact for Details',
       description: 'Data-driven nutrition strategies focusing on hormonal optimization, cognitive clarity, and sustained energy.'
     },
     {
       id: 'restoration',
       title: 'Structural Restoration',
-      price: '$150/Session',
+      price: '£30 (30m) / £50 (1h)',
       description: 'Advanced therapeutic massage and myofascial release to eliminate pain, improve posture, and accelerate recovery.'
     }
   ];
@@ -111,6 +184,10 @@ const App = () => {
       padding: 0 40px;
     }
 
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+    }
+
     /* Navigation */
     nav {
       position: fixed;
@@ -138,6 +215,11 @@ const App = () => {
       letter-spacing: 0.1em;
     }
 
+    @media (max-width: 480px) {
+      .logo { font-size: 0.9rem; }
+      nav { height: 80px; }
+    }
+
     /* Buttons */
     .btn {
       display: inline-flex;
@@ -153,6 +235,14 @@ const App = () => {
       transition: var(--transition);
       border: none;
       gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .btn { padding: 1rem 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .btn { padding: 0.8rem 1.5rem; font-size: 0.75rem; }
     }
 
     .btn-black {
@@ -183,8 +273,10 @@ const App = () => {
     }
 
     .hero-title {
-      font-size: clamp(3.5rem, 12vw, 10rem);
+      font-size: clamp(2.5rem, 10vw, 10rem);
       margin-bottom: 3rem;
+      word-wrap: break-word;
+      hyphens: auto;
     }
 
     .hero-meta {
@@ -196,6 +288,7 @@ const App = () => {
     }
 
     @media (max-width: 768px) {
+      .hero { padding-top: 140px; padding-bottom: 80px; }
       .hero-meta { grid-template-columns: 1fr; gap: 40px; }
     }
 
@@ -214,14 +307,19 @@ const App = () => {
     }
 
     @media (max-width: 768px) {
+      .services-wrapper { padding: 80px 0; }
       .services-header { flex-direction: column; align-items: flex-start; gap: 20px; }
       .services-header p { text-align: left; }
     }
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
+    }
+
+    @media (max-width: 400px) {
+      .services-grid { grid-template-columns: 1fr; }
     }
 
     .service-card {
@@ -232,6 +330,10 @@ const App = () => {
       display: flex;
       flex-direction: column;
       border: 1px solid #222;
+    }
+
+    @media (max-width: 768px) {
+      .service-card { padding: 40px 30px; border-radius: 30px; }
     }
 
     .service-card:hover {
@@ -253,7 +355,11 @@ const App = () => {
     }
 
     @media (max-width: 1024px) {
-      .contact-card { padding: 40px; }
+      .contact-card { padding: 40px; border-radius: 40px; }
+    }
+
+    @media (max-width: 480px) {
+      .contact-card { padding: 30px 20px; }
     }
 
     .contact-info-strip {
@@ -443,7 +549,7 @@ const App = () => {
       <section className="services-wrapper">
         <div className="container">
           <div className="services-header">
-            <h2 className="display-font" style={{ fontSize: '5rem' }}>The Lab<br />Disciplines</h2>
+            <h2 className="display-font" style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)' }}>The Lab<br />Disciplines</h2>
             <p style={{ maxWidth: '400px', opacity: '0.6', textAlign: 'right' }}>
               A holistic ecosystem designed to transform how you move, fuel, and recover.
             </p>
@@ -481,14 +587,14 @@ const App = () => {
               <div className="info-icon-box"><Phone size={22} /></div>
               <div>
                 <label>Direct Office</label>
-                <p style={{ fontWeight: '800' }}>+1 (310) 555-DTPL</p>
+                <p style={{ fontWeight: '800' }}>+44 7877 460210</p>
               </div>
             </div>
             <div className="info-item">
               <div className="info-icon-box"><Mail size={22} /></div>
               <div>
                 <label>Email Inquiry</label>
-                <p style={{ fontWeight: '800' }}>hello@turnerperflabs.com</p>
+                <p style={{ fontWeight: '800' }}>contact@dtperformancelabs.com</p>
               </div>
             </div>
             <div className="info-item">
@@ -503,7 +609,7 @@ const App = () => {
           <div className="questionnaire-layout">
             <div>
               <p className="sub-heading" style={{ color: '#000', marginBottom: '1rem' }}>Step 01 / Discovery</p>
-              <h2 className="display-font" style={{ fontSize: '4rem', marginBottom: '2.5rem' }}>The Lab<br />Protocol</h2>
+              <h2 className="display-font" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', marginBottom: '2.5rem' }}>The Lab<br />Protocol</h2>
               <p style={{ color: '#666', fontSize: '1.1rem' }}>
                 Before we begin, David needs to understand your current physiology and mission objectives. Complete this brief intake to prioritize your consultation.
               </p>
@@ -537,6 +643,14 @@ const App = () => {
                   </div>
                   <label>Mission Vision</label>
                   <textarea name="message" className="input-field" rows="4" placeholder="What are your 6-month performance objectives?"></textarea>
+                  
+                  <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                    <input type="checkbox" id="marketing_consent" name="marketing_consent" style={{ marginTop: '0.3rem' }} />
+                    <label htmlFor="marketing_consent" style={{ fontSize: '0.8rem', textTransform: 'none', letterSpacing: 'normal', fontWeight: '400' }}>
+                      I agree to receive communications from David Turner Performance Labs regarding my enquiry and future performance opportunities. You can unsubscribe at any time.
+                    </label>
+                  </div>
+
                   <button type="submit" className="btn btn-black" style={{ width: '100%' }}>Initiate Review</button>
                 </form>
               ) : (
@@ -558,21 +672,21 @@ const App = () => {
               <div className="info-icon-box"><MapPin size={22} /></div>
               <div>
                 <label>Lab Location</label>
-                <p style={{ fontWeight: '800' }}>Santa Monica, CA 90401</p>
+                <p style={{ fontWeight: '800' }}>Portsmouth, United Kingdom</p>
               </div>
             </div>
             <div className="info-item">
               <div className="info-icon-box"><Award size={22} /></div>
               <div>
                 <label>Operating Hours</label>
-                <p style={{ fontWeight: '800' }}>05:00 — 21:00 PST</p>
+                <p style={{ fontWeight: '800' }}>05:00 — 21:00 GMT</p>
               </div>
             </div>
             <div className="info-item">
               <div className="info-icon-box"><Instagram size={22} /></div>
               <div>
                 <label>Follow The Work</label>
-                <p style={{ fontWeight: '800' }}>@DT_PERF_LABS</p>
+                <p style={{ fontWeight: '800' }}>dtperformancelabs</p>
               </div>
             </div>
           </div>
@@ -589,27 +703,39 @@ const App = () => {
               The gold standard for human optimization. Science-backed training, nutrition, and recovery for high-performing lives.
             </p>
             <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-              <button onClick={(e) => e.preventDefault()} className="social-link" style={{ background: 'transparent', cursor: 'pointer' }} aria-label="Instagram"><Instagram size={20} /></button>
-              <button onClick={(e) => e.preventDefault()} className="social-link" style={{ background: 'transparent', cursor: 'pointer' }} aria-label="Twitter"><Twitter size={20} /></button>
+              <a href="https://www.instagram.com/dxvidxi_fitness?igsh=NDl4MnhiNWJ5NTI5&utm_source=qr" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
+                <Instagram size={20} />
+              </a>
+              <a href="https://www.tiktok.com/@dxvidxi_fitness?_r=1&_t=ZG-92qYsY8NrkX" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="TikTok">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
+              </a>
             </div>
           </div>
           
           <div>
             <h4 style={{ fontWeight: '900', textTransform: 'uppercase', marginBottom: '2rem', fontSize: '0.8rem' }}>The Lab</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', color: '#666' }}>
-              <p>About David</p>
-              <p>The Methodology</p>
-              <p>Testimonials</p>
-              <p>Privacy Policy</p>
+              <button onClick={() => setView('home')} style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', color: '#666' }}>About David</button>
+              <button onClick={() => setView('home')} style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', color: '#666' }}>The Methodology</button>
+              <button onClick={() => setView('terms')} style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', color: '#666' }}>Terms & Liability</button>
+              <button onClick={() => setView('privacy')} style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', color: '#666' }}>Privacy Policy</button>
             </div>
           </div>
 
           <div>
             <h4 style={{ fontWeight: '900', textTransform: 'uppercase', marginBottom: '2rem', fontSize: '0.8rem' }}>Contact</h4>
             <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.8' }}>
-              Private Training Studio<br />
-              Santa Monica, CA<br />
-              90401
+              David Turner Performance Labs<br />
+              Portsmouth, United Kingdom<br />
+              
+              <br />
+              <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+                Registered in England & Wales<br />
+                Company No: 16119263<br />
+                
+              </span>
             </p>
           </div>
         </div>
