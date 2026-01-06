@@ -132,10 +132,10 @@ const App = () => {
     e.preventDefault();
 
     // 1. Send Admin Notification (To You)
-    const sendAdminNotification = emailjs.sendForm('service_q7li2we', 'template_j11lhp6', form.current, '6VCaNAARojB5FUW0-');
+    const sendAdminNotification = emailjs.sendForm('service_66umr3x', 'template_j11lhp6', form.current, '6VCaNAARojB5FUW0-');
 
     // 2. Send Auto-Reply (To User)
-    const sendAutoReply = emailjs.sendForm('service_q7li2we', 'template_i3q5a9n', form.current, '6VCaNAARojB5FUW0-');
+    const sendAutoReply = emailjs.sendForm('service_66umr3x', 'template_i3q5a9n', form.current, '6VCaNAARojB5FUW0-');
 
     // Wait for both to complete
     Promise.all([sendAdminNotification, sendAutoReply])
@@ -507,7 +507,7 @@ const App = () => {
       {/* Navigation */}
       <nav>
         <div className="container nav-content">
-          <div className="logo">DTPERFORMACELABS</div>
+          <div className="logo">DAVID TURNER / PERF LABS</div>
           <div>
             <button className="btn btn-black" onClick={() => handleBooking('General')}>
               Inquire
